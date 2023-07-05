@@ -1,0 +1,126 @@
+body{
+    background-image: url(../img/bosch_colors.jpg);
+}
+
+/* ================================= Estilização do Header ================================= */
+
+.header{
+    margin: 0px;
+    font-weight: 300;
+}
+
+.header{
+    font-size: 20px;
+    margin: 0px;
+    color: black;
+    margin-left: 10px;
+}
+
+.logo-login{
+    height: 30px;
+}
+
+.bg-body-tertiary {
+    --bs-bg-opacity: 1;
+    background-color: rgba(var(--bs-tertiary-bg-rgb),var(--bs-bg-opacity))!important;
+}
+
+.navbar{
+    width: 95%;
+    height: 4em;
+    margin-top: 20px;
+    margin-left: 10px;
+    border-radius: 50px;
+    backdrop-filter: blur(2px);
+    background-color: rgba(255, 255, 255, 0.7) !important;
+    position: fixed !important;
+}
+
+@media (min-width:768px){
+    .navbar{
+        margin: auto;
+        margin-top: 20px;
+    }
+}
+
+.navbar-brand{
+    display: flex;
+    align-items: flex-end;
+}
+
+.navbar-text{
+    margin-right: 20px;
+    padding: 0px;
+}
+
+.navbar-nav{
+    display: flex;
+    align-items: center;
+}
+
+.link-nav{
+    padding: 0px;
+    margin: 0px;
+}
+
+.pipeline{
+    padding-bottom: 3px;
+}
+
+/* ================================= Estilização da Main ================================= */
+
+.op-row{
+    width: 100%;
+}
+
+.top{
+    padding-top: 10%;
+    text-align: center;
+}
+
+.bottom{
+    padding-top: 27%;
+    text-align: center;
+}
+
+.btn-op{
+    height: 330px;
+    width: 330px;
+    border-radius: 50%;
+    transition: 0.6s;
+}
+
+.btn-op:hover{
+    transform: scale(1.1);
+    transition: 0.6s;
+    background-image: url(../img/wallpaperBranco.png);
+    opacity: 0.7;
+}
+
+.relogio{
+    background-image: url(../img/relogio.png);
+    background-size: cover;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.sala{
+    background-image: url(../img/salasOp.png);
+    background-size: cover;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.teams{
+    background-image: url(../img/logoTeams.png);
+    background-size: cover;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.titulo-op{
+    color: black;
+}
+
+/* ================================= Estilização do Modal ================================= */
+
+.modal{
+    margin-top: 160px;
+}

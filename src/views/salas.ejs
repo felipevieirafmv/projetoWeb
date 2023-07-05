@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="../css/style_salas.css">
+        <script type="text/javascript" src="../js/multiselect-dropdown.js"></script>
+
+    <title>Agendamento de reuniões</title>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="main">
+                    <img class="logo-login" src="../img/Bosch-logo.svg.png" alt="Logo da Bosch">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+                    aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <span class="navbar-text">
+                    <div class="collapse navbar-collapse" id="navbarText">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active link-nav" aria-current="page" href="reunioes">
+                                    <h5 class="link-nav header">Minhas Reuniões</h5>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <h1 class="header cadastrar pipeline">|&nbsp;</h1>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active link-nav" aria-current="page" href="/logout">
+                                    <h5 class="link-nav header">Sair</h5>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </span>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="setores">
+            <form action="/" method="post">
+                <input class="dropdown" type="datetime-local" id="dataReuniao" name="dataReuniao">
+            </form>
+            <form action="/" method="post">
+                <select class="dropdown" id="setor" name="salasSetor">
+                    <option>Selecionar sala</option>
+                    <% for (let i=0; i<salas.length; i++) { %>
+                        <option value='<%= salas[i].Nome %>'> <%=
+                            salas[i].Nome %>
+                    </option>
+                    <% } %>
+                </select>
+            </form>
+        </div>
+
+        <div class="salas">
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                <% for (let i=0; i<salas.length; i++) { %>
+                    <% console.log(salas[i])%>
+                    <div class="col">
+                        <div class="card h-100">
+                            <img class="img-card" src="../img/<%= salas[i].FotoSala %>" class="card-img-top">
+                            <div class="card-body">
+                                <h5 class="card-title"><%= salas[i].Nome %></h5>
+                                <br>
+                                <p class="Capacidade">Capacidade: <%= salas[i].Capacidade %> </p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="#" class="btn btn-primary btn-salas" data-bs-toggle="modal" data-bs-target="#myModal<%= salas[i].IDSala %>">Reservar sala</a>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+        <% for (let i=0; i<salas.length; i++) { %>
+            <div class="modal fade" id="myModal<%= salas[i].IDSala %>" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Reunião em uma sala</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Local: <%= salas[i].Nome %></p>
+                            <form action="/" method="post">
+                                <p>Assunto: 
+                                    <input type="text"></p>
+                            </form>
+                            <form action="/" method="post">
+                                <p>Data início: <input type="datetime-local"></p>
+                            </form>
+                            <form action="/" method="post">
+                                <p>Data fim: <input type="datetime-local"></p>
+                            </form>
+                            <form action="/" method="post">
+                                <select name="select" multiple multiselect-search="true">
+                                    <% for (let i=0; i<pessoas.length; i++) { %>
+                                        <option value='<%= pessoas[i].Usuario %>'> <%=
+                                            pessoas[i].Nome %>
+                                    </option>
+                                    <% } %>
+                                </select>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary">Solicitar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    </main>
+</body>
+
+</html>
