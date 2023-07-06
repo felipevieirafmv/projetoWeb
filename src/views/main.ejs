@@ -56,7 +56,7 @@
                 </div>
                 <div class="top col col-xs-12 col-sm-12 col-md-4">
                     <a href="mapa">
-                        <button type="button" class="btn btn-op sala"><h3 class="titulo-op">Reunião por Sala</h3></button>
+                        <button type="button" class="btn btn-op sala"><h3 class="titulo-op">Reunião em uma Sala</h3></button>
                     </a>
                 </div>
                 <div class="bottom col col-xs-12 col-sm-12 col-md-4">
@@ -92,9 +92,12 @@
                                 <% } %>
                             </select>
                         </form>
+                        <form action="/" method="post" class="com-modal">
+                            <textarea class="comentario" placeholder="Observações"></textarea>
+                        </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">Solicitar</button>
+                        <button type="button" class="btn btn-primary btn-solicitar">Solicitar</button>
                     </div>
                 </div>
             </div>
@@ -110,7 +113,7 @@
                         <p>Local: <%= salas[1].Nome %></p>
                         <form action="/" method="post">
                             <p>Assunto: 
-                                <input type="text"></p>
+                                <input type="text" class="assunto"></p>
                         </form>
                         <form action="/" method="post">
                             <p>Data início: <input type="datetime-local"></p>
@@ -127,9 +130,12 @@
                                 <% } %>
                             </select>
                         </form>
+                        <form action="/" method="post" class="com-modal">
+                            <textarea class="comentario" placeholder="Observações"></textarea>
+                        </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">Solicitar</button>
+                        <button type="button" class="btn btn-primary btn-solicitar">Solicitar</button>
                     </div>
                 </div>
             </div>

@@ -89,3 +89,35 @@ html{
 .modal{
     margin-top: 160px;
 }
+
+.btn-close{
+    background-color: transparent;
+    transition: 0.3s;
+}
+
+.btn-close:hover{
+    transform: scale(1.1);
+    background-color: red;
+    transition: 0.3s;
+}
+
+.com-modal{
+    padding-top: 15px;
+}
+
+.assunto{
+    width: 86%;
+}
+
+.comentario{
+    width: 100%;
+}
+
+.btn-solicitar{
+    transition: 0.3s;
+}
+
+.btn-solicitar:hover{
+    transform: scale(1.1);
+    transition: 0.3s;
+}

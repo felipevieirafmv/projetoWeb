@@ -17,20 +17,21 @@ module.exports = {
 
         session = req.session;
 
-        if(!p){
+        if(p == ""){
             res.render('../views/index', {message: "Usuario ou senha incorretos"})
             return
         }
-        if(p[0].Senha == senha){
-
-            session.usuario = usuario;
-            session.senha = senha;
-            session.nome = p[0].Nome;
-
-            res.redirect('/main')
-        }
         else{
-            res.render('../views/index', {message: "Usuario ou senha incorretos"})
+            if(p[0].Senha == senha){
+                session.usuario = usuario;
+                session.senha = senha;
+                session.nome = p[0].Nome;
+                
+                res.redirect('/main')
+            }
+            else{
+                res.render('../views/index', {message: "Usuario ou senha incorretos"})
+            }
         }
     },
 

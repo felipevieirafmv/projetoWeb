@@ -98,7 +98,7 @@
                             <p>Local: <%= salas[i].Nome %></p>
                             <form action="/" method="post">
                                 <p>Assunto: 
-                                    <input type="text"></p>
+                                    <input type="text" class="assunto"></p>
                             </form>
                             <form action="/" method="post">
                                 <p>Data início: <input type="datetime-local"></p>
@@ -115,9 +115,12 @@
                                     <% } %>
                                 </select>
                             </form>
+                            <form action="/" method="post" class="com-modal">
+                                <textarea class="comentario" placeholder="Observações"></textarea>
+                            </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary">Solicitar</button>
+                            <button type="button" class="btn btn-primary btn-solicitar">Solicitar</button>
                         </div>
                     </div>
                 </div>
