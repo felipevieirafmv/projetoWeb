@@ -21,5 +21,9 @@ module.exports = {
         });
 
         res.render('../views/main', {salas, pessoas});
+    },
+
+    async mainPost(req, res){
+        console.log(req.body)
     }
 }
