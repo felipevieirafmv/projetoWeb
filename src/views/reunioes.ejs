@@ -19,9 +19,20 @@
     <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
             <div class="container-fluid">
-                <a class="navbar-brand" href="main">
-                    <img class="logo-login" src="../img/Bosch-logo.svg.png" alt="Logo da Bosch">
-                </a>
+                <div class="voltar-links">
+                    <a class="navbar-brand" href="main">
+                        <img class="logo-login" src="../img/Bosch-logo.svg.png" alt="Logo da Bosch">
+                    </a>
+                    <h1 class="header cadastrar pipeline-voltar">|</h1>
+                    <a class="voltar-pag" href="main">
+                        <button type="button" class="btn btn-voltar">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" class="bi bi-caret-left-square-fill" viewBox="0 0 16 16">
+                                <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm10.5 10V4a.5.5 0 0 0-.832-.374l-4.5 4a.5.5 0 0 0 0 .748l4.5 4A.5.5 0 0 0 10.5 12z"/>
+                            </svg>
+                            <h7 class="voltar-tittle">Voltar</h7>
+                        </button>
+                    </a>
+                </div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
                     aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -35,7 +46,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <h1 class="header cadastrar pipeline">|&nbsp;</h1>
+                                <h1 class="header cadastrar pipeline-links">|&nbsp;</h1>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link active link-nav" aria-current="page" href="/logout">
@@ -102,47 +113,20 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Reunião em uma sala</h5>
+                        <h5 class="modal-title">* Tipo da Reunião precisa conectar com o banco *</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <p>Local: SalaGrande01</p>
+                        <p>Local: * Conectar com o banco *</p>
                         <form action="/" method="post">
-                            <p>Assunto: 
-                                <input type="text"></p>
+                            <p>Assunto: * Conectar com o banco *</p>
                         </form>
                         <form action="/" method="post">
-                            <p>Data início: <input type="datetime-local"></p>
+                            <p>Data início: * Conectar com o banco *</p>
                         </form>
                         <form action="/" method="post">
-                            <p>Data fim: <input type="datetime-local"></p>
+                            <p>Data fim: * Conectar com o banco *</p>
                         </form>
-                        <form action="/" method="post">
-                            <select name="select" multiple multiselect-search="true">
-                                <option>First</option>
-                                <option>Second</option>
-                                <option>Third</option>
-                            </select>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">Solicitar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal fade" id="myModal2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Reunião via Teams</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Local: Via Teams (on-line).</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">Solicitar</button>
                     </div>
                 </div>
             </div>
