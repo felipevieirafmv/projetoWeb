@@ -28,11 +28,6 @@ const reuniao = database.define('Reuniao', {
     Observacoes: {
         type: Sequelize.STRING(255),
         allowNull: true
-    },
-
-    Setor: {
-        type: Sequelize.STRING(50),
-        allowNull: false
     }
 });
 

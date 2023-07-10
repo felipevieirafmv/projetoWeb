@@ -31,6 +31,7 @@ module.exports = {
             }
             else{
                 res.render('../views/index', {message: "Usuario ou senha incorretos"})
+                return
             }
         }
     },

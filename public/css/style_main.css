@@ -138,6 +138,7 @@ body{
 
 .com-modal{
     padding-top: 15px;
+    padding-bottom: var(--bs-modal-padding);
 }
 
 .assunto{
@@ -155,4 +156,9 @@ body{
 .btn-solicitar:hover{
     transform: scale(1.1);
     transition: 0.3s;
+}
+
+.modal-footer{
+    padding: 0px;
+    padding-top: calc(var(--bs-modal-padding) - var(--bs-modal-footer-gap) * .5);
 }
