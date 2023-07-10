@@ -3,15 +3,44 @@ html{
 }
 
 .header{
-    margin: 0px;
     font-weight: 300;
-}
-
-.header{
     font-size: 20px;
     margin: 0px;
     color: black;
-    margin-left: 10px;
+}
+
+.voltar-links{
+    display: flex;
+    align-items: center;
+}
+
+.pipeline-voltar{
+    padding-right: 4px;
+    padding-bottom: 3px;
+}
+
+.pipeline-links{
+    padding-left: 8px;
+    padding-bottom: 3px;
+}
+
+.btn-voltar{
+    transition: 0.3s;
+    background-color: transparent;
+}
+
+.btn-voltar:hover{
+    transform: scale(1.06);
+    transition: 0.3s;
+    background-color: rgba(187, 187, 187, 0.521);
+}
+
+.bi{
+    fill: rgba(97, 97, 97, 0.801);
+}
+
+.voltar-tittle{
+    vertical-align: middle;
 }
 
 .logo-login{
@@ -42,8 +71,9 @@ html{
     margin: 0px;
 }
 
-.pipeline{
-    padding-bottom: 3px;
+.voltar-pag{
+    text-decoration: none;
+    color:rgb(0, 0, 0);
 }
 
 .setores{
