@@ -52,11 +52,9 @@ module.exports = {
                     verificacao1 = false;
                 }
                 else{
-                    if(fimNR.getHours()-inicioNR.getHours()>4){
-                        if(fimNR.getMinutes()-inicioNR.getMinutes()>0){
-                            console.log('compra uma sala logo pra vc');
-                            verificacao1 = false;
-                        }
+                    if(fimNR.getTime()-inicioNR.getTime()>14400000){
+                        console.log('compra uma sala logo pra vc');
+                        verificacao1 = false;
                     }
                 }
             }
@@ -133,6 +131,7 @@ module.exports = {
 
             }
             console.log(ocupados);
+            console.log(fimNR.getTime());
             
             if(ocupados.length<1){
                 const r = await reuniao.create({
