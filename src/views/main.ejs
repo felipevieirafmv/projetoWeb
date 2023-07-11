@@ -10,6 +10,8 @@
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../css/style_main.css">
     <script type="text/javascript" src="../js/multiselect-dropdown.js"></script>
+    <script src="https://momentjs.com/downloads/moment.min.js"></script>
+    <script src="https://momentjs.com/downloads/moment-timezone-with-data.min.js"></script>
     <title>Agendamento de Reuniões</title>
 </head>
 <body>
@@ -74,7 +76,7 @@
                     <div class="modal-body">
                         <form action="/main" method="post">
                             <p>Local: <%= salas[0].Nome %>
-                            <input type="text" value="<%= salas[0].Nome %>" name="sala" hidden></p>
+                            <input type="text" value="<%= salas[0].IDSala %>" name="sala" hidden></p>
                             <p>Assunto: 
                                 <input type="text" name="assunto"></p>
                             <p>Data início: <input type="datetime-local" name="dataInicio"></p>

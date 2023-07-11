@@ -17,6 +17,7 @@
     "express-session": "^1.17.3",
     "mssql": "^9.1.1",
     "nodemon": "^2.0.22",
-    "sequelize": "^6.32.1"
+    "sequelize": "^6.32.1",
+    "tzdata": "^1.0.38"
   }
 }
