@@ -103,14 +103,6 @@ module.exports = {
                     var compInicioRA = inicioRA.getTime();
                     var compFimRA = fimRA.getTime();
 
-                    if(compInicioNR<0){
-                        compInicioNR+=24;
-                    }
-
-                    if(compFimNR<0){
-                        compFimNR+=24;
-                    }
-
                     if(compInicioNR<compInicioRA && compFimNR>compInicioRA){
                         console.log('deu certo a verificacao kk')
                         ocupados.push(convidados[i]);

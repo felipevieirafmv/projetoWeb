@@ -106,32 +106,28 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <p>Local: <%= salas[i].Nome %></p>
-                            <form action="/" method="post">
+                            <form action="/salas/reuniao" method="post">
+                                <p>Local: <%= salas[i].Nome %>
+                                <input type="text" value="<%= salas[i].IDSala %>" name="sala" hidden></p>
                                 <p>Assunto: 
-                                    <input type="text" class="assunto"></p>
-                            </form>
-                            <form action="/" method="post">
-                                <p>Data início: <input type="datetime-local"></p>
-                            </form>
-                            <form action="/" method="post">
-                                <p>Data fim: <input type="datetime-local"></p>
-                            </form>
-                            <form action="/" method="post">
+                                    <input type="text" name="assunto"></p>
+                                <p>Data início: <input type="datetime-local" name="dataInicio"></p>
+                                <p>Data fim: <input type="datetime-local" name="dataFim"></p>
                                 <select name="select" multiple multiselect-search="true">
                                     <% for (let i=0; i<pessoas.length; i++) { %>
                                         <option value='<%= pessoas[i].Usuario %>'> <%=
                                             pessoas[i].Nome %>
                                     </option>
+    
                                     <% } %>
                                 </select>
+                                <div class="com-modal">
+                                    <textarea class="comentario" placeholder="Observações" name="comentario"></textarea>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary btn-solicitar">Solicitar</button>
+                                </div>
                             </form>
-                            <form action="/" method="post" class="com-modal">
-                                <textarea class="comentario" placeholder="Observações"></textarea>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary btn-solicitar">Solicitar</button>
                         </div>
                     </div>
                 </div>

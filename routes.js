@@ -14,7 +14,7 @@ route.get('/', index.pagInicialGet).post('/login', index.pagInicialPost);
 route.get('/main', main.mainGet).post('/main', main.mainPost);
 route.get('/mapa', mapa.mapaGet);
 route.get('/reunioes', reunioes.reunioesGet);
-route.get('/salas', salas.salasGet).post('/salas', salas.goSector);
+route.get('/salas', salas.salasGet).post('/salas', salas.goSector).post('/salas/reuniao', salas.salasPost);
 route.get('/logout', index.logout);
 
 module.exports = route;
