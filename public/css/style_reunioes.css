@@ -30,7 +30,7 @@ html{
 }
 
 .btn-voltar:hover{
-    transform: scale(1.1);
+    transform: scale(1.06);
     transition: 0.3s;
     background-color: rgba(187, 187, 187, 0.521);
 }
@@ -118,3 +118,13 @@ html{
     margin-top: 160px;
 }
 
+.btn-close{
+    background-color: transparent;
+    transition: 0.3s;
+}
+
+.btn-close:hover{
+    transform: scale(1.1);
+    background-color: red;
+    transition: 0.3s;
+}

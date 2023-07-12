@@ -10,6 +10,7 @@
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" type="image/png" href="/img/logo-aba.png" sizes="30x30">
     <title>Agendamento de Reuniões</title>
 </head>
 
@@ -17,7 +18,7 @@
     <header>
         <div class="imgheader"></div>
         <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
-            <div class="container-fluid"> 
+            <div class="container-fluid">
                 <a class="navbar-brand" href="#home">
                     <img class="logo-login" src="../img/Bosch-logo.svg.png" alt="Logo da Bosch">
                 </a>
@@ -47,12 +48,25 @@
                 </div>
                 <div class="card-body">
                     <div class="titulo-login">Fazer Login</div>
-                    <input class="form-control me-2" type="text" name="Login" placeholder="Nome de Usuário" aria-label="Search">
+                    <input class="form-control me-2" type="text" name="Login" placeholder="Nome de Usuário"
+                        aria-label="Search">
                     <p></p>
-                    <input class="form-control me-2" type="password" name="Password" placeholder="Senha" aria-label="Search">
+                    <input class="form-control me-2" type="password" name="Password" placeholder="Senha"
+                        aria-label="Search">
+                    <div class="error">
+                        <% if(message) { %>
+                            <div class="alert alert-danger d-flex align-items-center alert-error" role="alert">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-octagon" viewBox="0 0 16 16">
+                                    <path d="M4.54.146A.5.5 0 0 1 4.893 0h6.214a.5.5 0 0 1 .353.146l4.394 4.394a.5.5 0 0 1 .146.353v6.214a.5.5 0 0 1-.146.353l-4.394 4.394a.5.5 0 0 1-.353.146H4.893a.5.5 0 0 1-.353-.146L.146 11.46A.5.5 0 0 1 0 11.107V4.893a.5.5 0 0 1 .146-.353L4.54.146zM5.1 1 1 5.1v5.8L5.1 15h5.8l4.1-4.1V5.1L10.9 1H5.1z"/>
+                                    <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
+                                </svg>
+                                <h7 class="error-message">&nbsp;Usuário ou senha incorretos</h7>
+                            </div>
+                        <% } %>
+                    </div>
                 </div>
                 <div class="card-footer text-body-secondary">
-                    <button type="submit" class="btn btn-primary">Entrar</button>
+                    <button type="submit" class="btn btn-primary btn-entrar">Entrar</button>
                 </div>
             </form>
         </div>

@@ -131,3 +131,22 @@ body{
         left: 0;
     }
 }
+
+.error{
+    padding-top: 14px;
+    padding-right: 7px;
+}
+
+.alert-error{
+    height: 40px;
+    width: 260px;
+}
+
+.btn-entrar{
+    transition: 0.3s;
+}
+
+.btn-entrar:hover{
+    transform: scale(1.1);
+    transition: 0.3s;
+}

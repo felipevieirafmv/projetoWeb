@@ -2,7 +2,7 @@ const pessoa = require('../model/pessoa');
 
 module.exports = {
     async pagInicialGet(req, res){
-        res.render('../views/index');
+        res.render('../views/index', {message: false});
     },
     async pagInicialPost(req, res){
         const usuario = req.body.Login;
@@ -18,7 +18,7 @@ module.exports = {
         session = req.session;
 
         if(p == ""){
-            res.render('../views/index', {message: "Usuario ou senha incorretos"})
+            res.render('../views/index', {message: true})
             return
         }
         else{
@@ -30,8 +30,7 @@ module.exports = {
                 res.redirect('/main')
             }
             else{
-                res.render('../views/index', {message: "Usuario ou senha incorretos"})
-                return
+                res.render('../views/index', {message: true})
             }
         }
     },
