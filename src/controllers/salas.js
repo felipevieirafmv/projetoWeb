@@ -11,7 +11,6 @@ module.exports = {
         res.render('../views/salas');
     },
     
-
     async goSector(req, res){
         const setor = req.body.setor;
 
@@ -28,6 +27,23 @@ module.exports = {
 
         res.render('../views/salas', {salas, pessoas});
     },
+
+    // async horarioSala(req, res){
+    //     const horario = req.body.horario;
+
+    //     const salas = await sala.findAll({
+    //         raw: true,
+    //         attributes: ['IDSala', 'Nome', 'Capacidade', 'Setor', 'FotoSala'],
+    //         where: {Setor: setor}
+    //     });
+
+    //     const pessoas = await pessoa.findAll({
+    //         raw: true,
+    //         attributes: ['Usuario', 'Nome']
+    //     });
+
+    //     res.render('../views/salas', {salas, pessoas});
+    // },
 
     async salasPost(req, res){
         const novaReuniao = req.body;

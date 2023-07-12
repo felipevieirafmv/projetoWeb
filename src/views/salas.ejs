@@ -62,8 +62,8 @@
     </header>
     <main>
         <div class="setores">
-            <form action="/" method="post">
-                <input class="dropdown" type="datetime-local" id="dataReuniao" name="dataReuniao">
+            <form action="/salas/horario" method="post">
+                <input class="dropdown" type="datetime-local" id="dataReuniao" name="dataReuniao" onchange="this.form.submit()">
             </form>
             <form action="/" method="post">
                 <select class="dropdown" id="setor" name="salasSetor">
