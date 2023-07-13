@@ -2,6 +2,7 @@ const sala = require('../model/sala');
 const pessoa = require('../model/pessoa');
 const pessoaReuniao = require('../model/pessoaReuniao');
 const reuniao = require('../model/reuniao');
+const { Op } = require("sequelize");
 
 module.exports = {
     async salasGet(req, res){
@@ -22,7 +23,8 @@ module.exports = {
 
         const pessoas = await pessoa.findAll({
             raw: true,
-            attributes: ['Usuario', 'Nome']
+            attributes: ['Usuario', 'Nome'],
+                where: {Usuario: {[Op.ne]: req.session.usuario}}
         });
 
         res.render('../views/salas', {salas, pessoas});
@@ -117,21 +119,33 @@ module.exports = {
                 
             }
         }
+
+        let convidados = [];
+        convidados.push(req.session.usuario.toUpperCase());
+
+        console.log(novaReuniao.select)
+
+        if(typeof novaReuniao.select === 'string'){
+            convidados.push(novaReuniao.select)
+        }
+        else{
+            for(let i=0; i<novaReuniao.select.length; i++){
+                convidados.push(novaReuniao.select[i]);
+            }
+        }
+
+        const capSala = await sala.findOne({
+            raw: true,
+            attributes: ['IDSala', 'Nome', 'Capacidade'],
+            where: {IDSala: novaReuniao.sala}
+        });
+
+        if(convidados.length>capSala.Capacidade){
+            console.log('ta querendo gente dms amigao')
+            verificacao1 = false;
+        }
+
         if(verificacao1){
-
-            let convidados = [];
-            convidados.push(req.session.usuario.toUpperCase());
-
-            console.log(novaReuniao.select)
-
-            if(typeof novaReuniao.select === 'string'){
-                convidados.push(novaReuniao.select)
-            }
-            else{
-                for(let i=0; i<novaReuniao.select.length; i++){
-                    convidados.push(novaReuniao.select[i]);
-                }
-            }
 
             var ocupados = []
 
