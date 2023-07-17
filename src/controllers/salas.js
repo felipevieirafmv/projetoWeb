@@ -2,6 +2,7 @@ const sala = require('../model/sala');
 const pessoa = require('../model/pessoa');
 const pessoaReuniao = require('../model/pessoaReuniao');
 const reuniao = require('../model/reuniao');
+const { Op } = require("sequelize");
 
 module.exports = {
     async salasGet(req, res){
@@ -11,7 +12,6 @@ module.exports = {
         res.render('../views/salas');
     },
     
-
     async goSector(req, res){
         const setor = req.body.setor;
 
@@ -23,10 +23,77 @@ module.exports = {
 
         const pessoas = await pessoa.findAll({
             raw: true,
+            attributes: ['Usuario', 'Nome'],
+                where: {Usuario: {[Op.ne]: req.session.usuario}}
+        });
+
+        res.render('../views/salas', {salas, pessoas, setor});
+    },
+
+    async horarioSala(req, res){
+        const horario = req.body.dataReuniao;
+        const setor = req.body.setor;
+
+        var reunioes = await reuniao.findAll({
+            raw: true,
+            attributes: ['Assunto', 'HorarioInicio', 'HorarioFim', 'IdReuniao', 'IDSala', 'Observacoes'],
+            include: [
+                {
+                    model: sala,
+                    attributes: ['IDSala', 'Nome', 'Capacidade', 'Setor', 'FotoSala'],
+                }
+            ],
+            where: {
+                [Op.and]: [
+                    {HorarioInicio:{[Op.lte]: horario}}, {HorarioFim:{[Op.gte]: horario}}
+                ]
+            }
+        });
+
+        // where: {
+        //     [Op.and]: [
+        //         {[Op.gte]: horario}, {[Op.lte]: horario}
+        //     ]
+        // }
+
+        // console.log(horario)
+
+        const pessoas = await pessoa.findAll({
+            raw: true,
             attributes: ['Usuario', 'Nome']
         });
 
-        res.render('../views/salas', {salas, pessoas});
+        console.log(reunioes)
+
+        if(reunioes.length<1){
+            const salas = await sala.findAll({
+                raw: true,
+                attributes: ['IDSala', 'Nome', 'Capacidade', 'Setor', 'FotoSala'],
+                where:{Setor: setor}
+            });
+            return res.render('../views/salas', {salas, pessoas, setor});
+        }
+        else{
+            const ids = []
+
+            for(let i=0; i<reunioes.length; i++){
+                ids.push(reunioes[i].IDSala);
+            }
+
+            const salas = await sala.findAll({
+                raw: true,
+                attributes: ['IDSala', 'Nome', 'Capacidade', 'Setor', 'FotoSala'],
+                where:{
+                    [Op.and]: [
+                        {Setor: setor}, {IDSala: {[Op.notIn]: ids}}
+                    ]
+                }
+            });
+
+            console.log(ids)
+            
+            return res.render('../views/salas', {salas, pessoas, setor});
+        }
     },
 
     async salasPost(req, res){
@@ -101,21 +168,33 @@ module.exports = {
                 
             }
         }
+
+        let convidados = [];
+        convidados.push(req.session.usuario.toUpperCase());
+
+        console.log(novaReuniao.select)
+
+        if(typeof novaReuniao.select === 'string'){
+            convidados.push(novaReuniao.select)
+        }
+        else{
+            for(let i=0; i<novaReuniao.select.length; i++){
+                convidados.push(novaReuniao.select[i]);
+            }
+        }
+
+        const capSala = await sala.findOne({
+            raw: true,
+            attributes: ['IDSala', 'Nome', 'Capacidade'],
+            where: {IDSala: novaReuniao.sala}
+        });
+
+        if(convidados.length>capSala.Capacidade){
+            console.log('ta querendo gente dms amigao')
+            verificacao1 = false;
+        }
+
         if(verificacao1){
-
-            let convidados = [];
-            convidados.push(req.session.usuario.toUpperCase());
-
-            console.log(novaReuniao.select)
-
-            if(typeof novaReuniao.select === 'string'){
-                convidados.push(novaReuniao.select)
-            }
-            else{
-                for(let i=0; i<novaReuniao.select.length; i++){
-                    convidados.push(novaReuniao.select[i]);
-                }
-            }
 
             var ocupados = []
 
