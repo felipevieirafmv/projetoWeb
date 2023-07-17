@@ -68,45 +68,23 @@
 
         <div class="salas">
             <div class="row row-cols-1 row-cols-md-3 g-4">
-                <div class="col">
-                    <div class="card h-100">
-                        <div class="card-header">Assunto</div>
-                        <div class="card-body">
-                            <h5 class="card-title">Sala Grande 01</h5>
-                            <br>
-                            <p class="Capacidade">Capacidade: X</p>
-                        </div>
-                        <div class="card-footer">
-                            <a href="#" class="btn btn-primary btn-salas" data-bs-toggle="modal" data-bs-target="#myModal1">Mais informações</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100">
-                        <div class="card-header">Assunto</div>
-                        <div class="card-body">
-                            <h5 class="card-title">Sala Grande 01</h5>
-                            <br>
-                            <p class="Capacidade">Capacidade: X</p>
-                        </div>
-                        <div class="card-footer">
-                            <a href="#" class="btn btn-primary btn-salas" data-bs-toggle="modal" data-bs-target="#myModal1">Mais informações</a>
+                <% for (let i=0; i<reunioes.length; i++) { %>
+                    <div class="col">
+                        <div class="card h-100">
+                            <div class="card-header"><%= reunioes[i]['Reuniao.Sala.Nome']%></div>
+                            <div class="card-body">
+                                <h5 class="card-title"><%= reunioes[i]['Reuniao.Assunto'] %></h5>
+                                <br>
+                                <p class="Capacidade">Data início: <%= datasI[i]%></p>
+                                <p class="Capacidade">Data fim: <%= datasF[i]%></p>
+                                <p class="Capacidade">Observações: <%= reunioes[i]['Reuniao.Observacoes']%></p>
+                            </div>
+                            <div class="card-footer">
+                                <a href="#" class="btn btn-primary btn-salas" data-bs-toggle="modal" data-bs-target="#myModal<%= reunioes[i].IDSala %>">Reservar sala</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100">
-                        <div class="card-header">Assunto</div>
-                        <div class="card-body">
-                            <h5 class="card-title">Sala Grande 01</h5>
-                            <br>
-                            <p class="Capacidade">Capacidade: X</p>
-                        </div>
-                        <div class="card-footer">
-                            <a href="#" class="btn btn-primary btn-salas" data-bs-toggle="modal" data-bs-target="#myModal1">Mais informações</a>
-                        </div>
-                    </div>
-                </div>
+                <% } %>
             </div>
         </div>
         <div class="modal fade" id="myModal1" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
