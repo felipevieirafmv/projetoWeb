@@ -69,11 +69,6 @@ body{
 
 /* ================================= Estilização da Main ================================= */
 
-.alert-error{
-    height: 40px;
-    width: 260px;
-}
-
 .op-row{
     width: 100%;
 }
@@ -91,8 +86,8 @@ body{
 .btn-op{
     height: 330px;
     width: 330px;
-    border-radius: 50% !important;
-    transition: 0.6s !important;
+    border-radius: 50%;
+    transition: 0.6s;
 }
 
 .btn-op:hover{

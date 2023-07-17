@@ -27,20 +27,9 @@ module.exports = {
                 where: {Usuario: {[Op.ne]: req.session.usuario}}
         });
 
-        res.render('../views/main', {salas, pessoas, message: false});
+        res.render('../views/main', {salas, pessoas});
     },
-    async pagInicialGet(req, res){
-        const pessoas = await pessoa.findAll({
-            raw: true,
-            attributes: ['Usuario', 'Nome'],
-                where: {Usuario: {[Op.ne]: req.session.usuario}}
-        });
-        const salas = await sala.findAll({
-            raw: true,
-            attributes: ['IDSala', 'Nome', 'Capacidade', 'Setor', 'FotoSala']
-        });
-        res.render('../views/main', {salas, pessoas, message: false});
-    },
+
     async mainPost(req, res){
         const novaReuniao = req.body;
         const currentdate = new Date(); 
@@ -48,67 +37,24 @@ module.exports = {
         const fimNR = new Date(novaReuniao.dataFim);
         var verificacao1 = true;
 
-
-        // função vini
-
         if(novaReuniao.assunto == '' || novaReuniao.dataInicio == '' || novaReuniao.dataFim == '' || novaReuniao.select === undefined){
-            const pessoas = await pessoa.findAll({
-                raw: true,
-                attributes: ['Usuario', 'Nome'],
-                    where: {Usuario: {[Op.ne]: req.session.usuario}}
-            });
-            const salas = await sala.findAll({
-                raw: true,
-                attributes: ['IDSala', 'Nome', 'Capacidade', 'Setor', 'FotoSala']
-            });
+            console.log('reuniao inexistente');
             verificacao1 = false;
-            const mensagem = 'Sua reunião não existe.';
-            res.render('../views/main', {salas, pessoas, message: true, mensagem});
         }
         else{
             if(currentdate > inicioNR){
-                const pessoas = await pessoa.findAll({
-                    raw: true,
-                    attributes: ['Usuario', 'Nome'],
-                        where: {Usuario: {[Op.ne]: req.session.usuario}}
-                });
-                const salas = await sala.findAll({
-                    raw: true,
-                    attributes: ['IDSala', 'Nome', 'Capacidade', 'Setor', 'FotoSala']
-                });
+                console.log('reuniao no passado slk');
                 verificacao1 = false;
-                const mensagem = 'Data inválida: Horário anterior ao atual.';
-                res.render('../views/main', {salas, pessoas, message: true, mensagem});
             }
             else{
                 if(fimNR < inicioNR){
-                    const pessoas = await pessoa.findAll({
-                        raw: true,
-                        attributes: ['Usuario', 'Nome'],
-                            where: {Usuario: {[Op.ne]: req.session.usuario}}
-                    });
-                    const salas = await sala.findAll({
-                        raw: true,
-                        attributes: ['IDSala', 'Nome', 'Capacidade', 'Setor', 'FotoSala']
-                    });
+                    console.log('acaba antes de terminar kk');
                     verificacao1 = false;
-                    const mensagem = 'Data inválida: Termina antes de começar.';
-                    res.render('../views/main', {salas, pessoas, message: true, mensagem});
                 }
                 else{
                     if(fimNR.getTime()-inicioNR.getTime()>14400000){
-                        const pessoas = await pessoa.findAll({
-                            raw: true,
-                            attributes: ['Usuario', 'Nome'],
-                                where: {Usuario: {[Op.ne]: req.session.usuario}}
-                        });
-                        const salas = await sala.findAll({
-                            raw: true,
-                            attributes: ['IDSala', 'Nome', 'Capacidade', 'Setor', 'FotoSala']
-                        });
+                        console.log('compra uma sala logo pra vc');
                         verificacao1 = false;
-                        const mensagem = 'Excede o limete de tempo (4 horas).';
-                        res.render('../views/main', {salas, pessoas, message: true, mensagem});
                     }
                 }
             }
@@ -158,15 +104,19 @@ module.exports = {
                     var compFimRA = fimRA.getTime();
 
                     if(compInicioNR<compInicioRA && compFimNR>compInicioRA){
+                        console.log('deu certo a verificacao kk')
                         ocupados.push(convidados[i]);
                     }
                     else if(compInicioRA<compInicioNR && compFimRA>compInicioNR){
+                        console.log('deu certo dnv')
                         ocupados.push(convidados[i]);
                     }
                     else if(compInicioNR<compInicioRA && compFimNR>compFimRA){
+                        console.log('deu certo mais uma')
                         ocupados.push(convidados[i]);
                     }
                     else if(compInicioRA<compInicioNR && compFimRA>compFimNR){
+                        console.log('deu certo a ultima')
                         ocupados.push(convidados[i]);
                     }
                 }
@@ -201,20 +151,7 @@ module.exports = {
             }
         }
         else{
-            const pessoas = await pessoa.findAll({
-                raw: true,
-                attributes: ['Usuario', 'Nome'],
-                    where: {Usuario: {[Op.ne]: req.session.usuario}}
-            });
-            const salas = await sala.findAll({
-                raw: true,
-                attributes: ['IDSala', 'Nome', 'Capacidade', 'Setor', 'FotoSala']
-            });
-            const mensagem = 'Sua reunião não existe.';
-            res.render('../views/main', {salas, pessoas, message: true, mensagem});
-            
-            // função vini para convidados
-            
+            console.log('reuniao nao existe meu parceiro')
         }
     }
 }
