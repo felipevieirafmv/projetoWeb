@@ -27,25 +27,74 @@ module.exports = {
                 where: {Usuario: {[Op.ne]: req.session.usuario}}
         });
 
-        res.render('../views/salas', {salas, pessoas});
+        res.render('../views/salas', {salas, pessoas, setor});
     },
 
-    // async horarioSala(req, res){
-    //     const horario = req.body.horario;
+    async horarioSala(req, res){
+        const horario = req.body.dataReuniao;
+        const setor = req.body.setor;
 
-    //     const salas = await sala.findAll({
-    //         raw: true,
-    //         attributes: ['IDSala', 'Nome', 'Capacidade', 'Setor', 'FotoSala'],
-    //         where: {Setor: setor}
-    //     });
+        var reunioes = await reuniao.findAll({
+            raw: true,
+            attributes: ['Assunto', 'HorarioInicio', 'HorarioFim', 'IdReuniao', 'IDSala', 'Observacoes'],
+            include: [
+                {
+                    model: sala,
+                    attributes: ['IDSala', 'Nome', 'Capacidade', 'Setor', 'FotoSala'],
+                }
+            ],
+            where: {
+                [Op.and]: [
+                    {HorarioInicio:{[Op.lte]: horario}}, {HorarioFim:{[Op.gte]: horario}}
+                ]
+            }
+        });
 
-    //     const pessoas = await pessoa.findAll({
-    //         raw: true,
-    //         attributes: ['Usuario', 'Nome']
-    //     });
+        // where: {
+        //     [Op.and]: [
+        //         {[Op.gte]: horario}, {[Op.lte]: horario}
+        //     ]
+        // }
 
-    //     res.render('../views/salas', {salas, pessoas});
-    // },
+        // console.log(horario)
+
+        const pessoas = await pessoa.findAll({
+            raw: true,
+            attributes: ['Usuario', 'Nome']
+        });
+
+        console.log(reunioes)
+
+        if(reunioes.length<1){
+            const salas = await sala.findAll({
+                raw: true,
+                attributes: ['IDSala', 'Nome', 'Capacidade', 'Setor', 'FotoSala'],
+                where:{Setor: setor}
+            });
+            return res.render('../views/salas', {salas, pessoas, setor});
+        }
+        else{
+            const ids = []
+
+            for(let i=0; i<reunioes.length; i++){
+                ids.push(reunioes[i].IDSala);
+            }
+
+            const salas = await sala.findAll({
+                raw: true,
+                attributes: ['IDSala', 'Nome', 'Capacidade', 'Setor', 'FotoSala'],
+                where:{
+                    [Op.and]: [
+                        {Setor: setor}, {IDSala: {[Op.notIn]: ids}}
+                    ]
+                }
+            });
+
+            console.log(ids)
+            
+            return res.render('../views/salas', {salas, pessoas, setor});
+        }
+    },
 
     async salasPost(req, res){
         const novaReuniao = req.body;
