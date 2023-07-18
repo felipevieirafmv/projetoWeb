@@ -66,16 +66,6 @@
                 <input class="dropdown" type="datetime-local" id="dataReuniao" name="dataReuniao" onchange="this.form.submit()">
                 <input type="text" hidden value="<%= setor %>" name="setor">
             </form>
-            <form action="/" method="post">
-                <select class="dropdown" id="setor" name="salasSetor">
-                    <option>Selecionar sala</option>
-                    <% for (let i=0; i<salas.length; i++) { %>
-                        <option value='<%= salas[i].Nome %>'> <%=
-                            salas[i].Nome %>
-                    </option>
-                    <% } %>
-                </select>
-            </form>
         </div>
 
         <div class="salas">

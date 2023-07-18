@@ -11,6 +11,7 @@
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
         crossorigin="anonymous"></script>
         <link rel="stylesheet" href="../css/style_reunioes.css">
+        <script type="text/javascript" src="../js/multiselect-dropdown.js"></script>
     <link rel="icon" type="image/png" href="/img/logo-aba.png">
     <title>Agendamento de reuniões</title>
 </head>
@@ -60,55 +61,74 @@
         </nav>
     </header>
     <main>
-        <div class="setores">
-            <form action="/" method="post">
-                <input class="dropdown" type="datetime-local" id="dataReuniao" name="dataReuniao">
-            </form>
-        </div>
+        <div class="setores"></div>
 
         <div class="salas">
-            <div class="row row-cols-1 row-cols-md-3 g-4">
-                <% for (let i=0; i<reunioes.length; i++) { %>
+            <div class="row row-cols-1 row-cols-md-<%= colunas %> g-4">
+                <% for (let i=0; i<reunioesFront.length; i++) { %>
                     <div class="col">
                         <div class="card h-100">
-                            <div class="card-header"><%= reunioes[i]['Reuniao.Sala.Nome']%></div>
+                            <div class="card-header"><%= nomes[i]%></div>
                             <div class="card-body">
-                                <h5 class="card-title"><%= reunioes[i]['Reuniao.Assunto'] %></h5>
+                                <h5 class="card-title"><%= reunioesFront[i]['Reuniao.Assunto'] %></h5>
                                 <br>
                                 <p class="Capacidade">Data início: <%= datasI[i]%></p>
                                 <p class="Capacidade">Data fim: <%= datasF[i]%></p>
-                                <p class="Capacidade">Observações: <%= reunioes[i]['Reuniao.Observacoes']%></p>
+                                <p class="Capacidade">Observações: <%= reunioesFront[i]['Reuniao.Observacoes']%></p>
                             </div>
                             <div class="card-footer">
-                                <a href="#" class="btn btn-primary btn-salas" data-bs-toggle="modal" data-bs-target="#myModal<%= reunioes[i].IDSala %>">Reservar sala</a>
+                                <% if (reunioesFront[i]['Responsavel']) { %>
+                                    <a href="#" class="btn btn-primary btn-salas" data-bs-toggle="modal" data-bs-target="#myModal<%= reunioesFront[i]['Reuniao.IDSala'] %>">Editar reunião</a>
+                                <% } else { %>
+                                    <a href="#" class="btn btn-secondary disabled" data-bs-toggle="modal" data-bs-target="#myModal<%= reunioesFront[i]['Reuniao.IDSala'] %>" aria-disabled="true">Editar reunião</a>
+                                <% } %>
                             </div>
                         </div>
                     </div>
                 <% } %>
             </div>
         </div>
-        <div class="modal fade" id="myModal1" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">* Tipo da Reunião (conectar com o banco) *</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Local: * Conectar com o banco *</p>
-                        <form action="/" method="post">
-                            <p>Assunto: * Conectar com o banco *</p>
-                        </form>
-                        <form action="/" method="post">
-                            <p>Data início: * Conectar com o banco *</p>
-                        </form>
-                        <form action="/" method="post">
-                            <p>Data fim: * Conectar com o banco *</p>
-                        </form>
+        <% for (let i=0; i<reunioesFront.length; i++) { %>
+            <div class="modal fade" id="myModal<%= reunioesFront[i]['Reuniao.IDSala'] %>" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Editar reunião</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="/reunioes/<%= reunioesFront[i]['Reuniao.IdReuniao'] %>" method="post">
+                                <p>Local: <%= reunioesFront[i]['Reuniao.Sala.Nome'] %>
+                                <input type="text" value="<%= reunioesFront[i]['Reuniao.IDSala'] %>" name="sala" hidden></p>
+                                <p style="margin-bottom: 0px;">Assunto: 
+                                    <input type="text" name="assunto"></p>
+                                <p style="color: gray;">Atual: <%= reunioesFront[i]['Reuniao.Assunto'] %></p>
+                                <p style="margin-bottom: 0px;">Data início: <input type="datetime-local" name="dataInicio"></p>
+                                <p style="color: gray;">Atual: <%= datasI[i]%></p>
+                                <p style="margin-bottom: 0px;">Data fim: <input type="datetime-local" name="dataFim"></p>
+                                <p style="color: gray;">Atual: <%= datasF[i]%></p>
+                                <select name="select" multiple multiselect-search="true">
+                                    <% for (let i=0; i<pessoas.length; i++) { %>
+                                        <option value='<%= pessoas[i].Usuario %>'> <%=
+                                            pessoas[i].Nome %>
+                                    </option>
+    
+                                    <% } %>
+                                </select>
+                                <div class="com-modal">
+                                    <textarea class="comentario" placeholder="Observações" name="comentario"></textarea>
+                                    <p style="color: gray;">Atual: <%= reunioesFront[i]['Reuniao.Observacoes'] %></p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary btn-solicitar">Atualizar</button>
+                                    <a href="/reunioes/excluir/<%= reunioesFront[i]['Reuniao.IdReuniao'] %>" class="btn btn-danger">Deletar</a>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        <% } %>
     </main>
 </body>
 

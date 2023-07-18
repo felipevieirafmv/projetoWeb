@@ -2,6 +2,10 @@ html{
     background-color: #f5f5f5;
 }
 
+body{
+    overflow-x: hidden;
+}
+
 .header{
     font-weight: 300;
     font-size: 20px;
@@ -127,4 +131,12 @@ html{
     transform: scale(1.1);
     background-color: red;
     transition: 0.3s;
+}
+
+.com-modal{
+    padding-top: 15px;
+}
+
+.comentario{
+    width: 100%;
 }
