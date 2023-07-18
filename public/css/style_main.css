@@ -162,3 +162,13 @@ body{
     padding: 0px;
     padding-top: calc(var(--bs-modal-padding) - var(--bs-modal-footer-gap) * .5);
 }
+
+.error{
+    padding-top: 14px;
+    padding-right: 7px;
+}
+
+.alert-error{
+    height: 40px;
+    width: 260px;
+}
