@@ -1,3 +1,11 @@
+const sala = require('../model/sala');
+const pessoa = require('../model/pessoa');
+const pessoaReuniao = require('../model/pessoaReuniao');
+const reuniao = require('../model/reuniao');
+const { Op } = require("sequelize");
+const moment = require('moment');
+
+
 module.exports = {
     async reunioesGet(req, res){
         if(!req.session.usuario){
