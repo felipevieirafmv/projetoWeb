@@ -140,3 +140,35 @@ body{
 .comentario{
     width: 100%;
 }
+
+.btn-solicitar{
+    transition: 0.3s;
+}
+
+.btn-solicitar:hover{
+    transform: scale(1.1);
+    transition: 0.3s;
+}
+
+.modal-footer{
+    padding: 0px;
+    padding-top: calc(var(--bs-modal-padding) - var(--bs-modal-footer-gap) * .5);
+}
+
+.container-alert{
+    padding-top: 20px;
+    padding-left: 680px;
+    background-color: #f5f5f5;
+}
+
+.error{
+    padding-top: 14px;
+    padding-right: 7px;
+}
+
+.alert-error{
+    z-index: 9999;
+    height: 40px;
+    width: 525px;
+    margin-bottom: 0px;
+}

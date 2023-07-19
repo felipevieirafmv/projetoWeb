@@ -27,7 +27,7 @@ module.exports = {
                 where: {Usuario: {[Op.ne]: req.session.usuario}}
         });
 
-        res.render('../views/salas', {salas, pessoas, setor});
+        res.render('../views/salas', {salas, pessoas, setor, message: false});
     },
 
     async horarioSala(req, res){
@@ -71,7 +71,7 @@ module.exports = {
                 attributes: ['IDSala', 'Nome', 'Capacidade', 'Setor', 'FotoSala'],
                 where:{Setor: setor}
             });
-            return res.render('../views/salas', {salas, pessoas, setor});
+            return res.render('../views/salas', {salas, pessoas, setor, message: false});
         }
         else{
             const ids = []
@@ -92,39 +92,106 @@ module.exports = {
 
             console.log(ids)
             
-            return res.render('../views/salas', {salas, pessoas, setor});
+            return res.render('../views/salas', {salas, pessoas, setor, message: false});
         }
     },
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     async salasPost(req, res){
         const novaReuniao = req.body;
+        const setor = novaReuniao.setor[0];
         const currentdate = new Date(); 
         const inicioNR = new Date(novaReuniao.dataInicio);
         const fimNR = new Date(novaReuniao.dataFim);
         var verificacao1 = true;
 
+
+
+        console.log(novaReuniao)
+        console.log(setor)
+
+        const salas = await sala.findAll({
+            raw: true,
+            attributes: ['IDSala', 'Nome', 'Capacidade', 'Setor', 'FotoSala'],
+            where: {Setor: setor}
+        });
+
+        const pessoas = await pessoa.findAll({
+            raw: true,
+            attributes: ['Usuario', 'Nome'],
+                where: {Usuario: {[Op.ne]: req.session.usuario}}
+        });
+
+
+        
+
         if(novaReuniao.assunto == '' || novaReuniao.dataInicio == '' || novaReuniao.dataFim == '' || novaReuniao.select === undefined){
-            console.log('reuniao inexistente');
             verificacao1 = false;
+            const message = {message:'Incompleta: Faltaram dados para serem preenchidos.', variante:'danger'};
+            console.log('entrou')
+            res.render('../views/salas.ejs', {salas, pessoas, message, setor});
         }
         else{
             if(currentdate > inicioNR){
-                console.log('reuniao no passado slk');
                 verificacao1 = false;
+                const message = {message:'Data: Não é possível criar uma reunião antes da data atual.', variante:'danger'};
+                res.render('../views/salas.ejs', {salas, pessoas, message, setor});
             }
             else{
                 if(fimNR < inicioNR){
-                    console.log('acaba antes de terminar kk');
                     verificacao1 = false;
+                    const message = {message:'Horário: O horário final da reunião deve ser após o horário inicial.', variante:'danger'};
+                    res.render('../views/salas.ejs', {salas, pessoas, message, setor});
                 }
                 else{
                     if(fimNR.getTime()-inicioNR.getTime()>14400000){
-                        console.log('compra uma sala logo pra vc');
                         verificacao1 = false;
+                        const message = {message:'Horário: A reunião excede o limite de tempo (4 horas).', variante:'danger'};
+                        res.render('../views/salas.ejs', {salas, pessoas, message, setor});
                     }
                 }
             }
         };
+
+        console.log(verificacao1)
+        console.log(novaReuniao.select)
 
         if(verificacao1){
             const result = await pessoaReuniao.findAll({
@@ -150,26 +217,28 @@ module.exports = {
                 var compFimRA = fimRA.getTime();
 
                 if(compInicioNR<=compInicioRA && compFimNR>compInicioRA){
-                    console.log('sala invalida 1')
                     verificacao1 = false;
+                    const message = {message:'Sala indisponível para esse horário.', variante:'danger'};
+                    res.render('../views/salas.ejs', {salas, pessoas, message, setor});
                 }
                 else if(compInicioRA<compInicioNR && compFimRA>compInicioNR){
-                    console.log('sala invalida 2')
                     verificacao1 = false;
+                    const message = {message:'Sala indisponível para esse horário.', variante:'danger'};
+                    res.render('../views/salas.ejs', {salas, pessoas, message, setor});
                 }
                 else if(compInicioNR<=compInicioRA && compFimNR>compFimRA){
-                    console.log('sala invalida 3')
                     verificacao1 = false;
+                    const message = {message:'Sala indisponível para esse horário.', variante:'danger'};
+                    res.render('../views/salas.ejs', {salas, pessoas, message, setor});
                 }
                 else if(compInicioRA<compInicioNR && compFimRA>compFimNR){
-                    console.log('sala invalida 4')
                     verificacao1 = false;
+                    const message = {message:'Sala indisponível para esse horário.', variante:'danger'};
+                    res.render('../views/salas.ejs', {salas, pessoas, message, setor});
                 }
                 
             }
-        }
-
-        let convidados = [];
+            let convidados = [];
         convidados.push(req.session.usuario.toUpperCase());
 
         console.log(novaReuniao.select)
@@ -268,10 +337,19 @@ module.exports = {
                         IdReuniao: r.IdReuniao
                     })
                 }
+                const message = {message:'Reunião marcada com sucesso.', variante:'success'};
+                res.render('../views/salas.ejs', {salas, pessoas, message, setor});
+            }
+            else{
+                const message = {message:'Horário solicitado não está disponível para algum convidado.', variante:'danger'};
+                res.render('../views/salas.ejs', {salas, pessoas, message, setor});
             }
         }
+        }
+
         else{
-            console.log('reuniao nao existe meu parceiro')
+            const message = {message:'Horário solicitado não está disponível para algum convidado.', variante:'danger'};
+            res.render('../views/salas.ejs', {salas, pessoas, message, setor});
         }
     }
 }

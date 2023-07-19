@@ -21,11 +21,11 @@
         <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
             <div class="container-fluid">
                 <div class="voltar-links">
-                    <a class="navbar-brand" href="main">
+                    <a class="navbar-brand" href="../main">
                         <img class="logo-login" src="../img/Bosch-logo.svg.png" alt="Logo da Bosch">
                     </a>
                     <h1 class="header cadastrar pipeline-voltar">|</h1>
-                    <a class="voltar-pag" href="main">
+                    <a class="voltar-pag" href="../main">
                         <button type="button" class="btn btn-voltar">
                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" class="bi bi-caret-left-square-fill" viewBox="0 0 16 16">
                                 <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm10.5 10V4a.5.5 0 0 0-.832-.374l-4.5 4a.5.5 0 0 0 0 .748l4.5 4A.5.5 0 0 0 10.5 12z"/>
@@ -63,6 +63,18 @@
     <main>
         <div class="setores"></div>
 
+        <% if(message) { %>
+            <div class="container-alert">
+                <div id="myAlert" class="alert alert-<%= message.variante%> d-flex align-items-center alert-error alert-dismissible fade show" role="alert">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-octagon" viewBox="0 0 16 16">
+                        <path d="M4.54.146A.5.5 0 0 1 4.893 0h6.214a.5.5 0 0 1 .353.146l4.394 4.394a.5.5 0 0 1 .146.353v6.214a.5.5 0 0 1-.146.353l-4.394 4.394a.5.5 0 0 1-.353.146H4.893a.5.5 0 0 1-.353-.146L.146 11.46A.5.5 0 0 1 0 11.107V4.893a.5.5 0 0 1 .146-.353L4.54.146zM5.1 1 1 5.1v5.8L5.1 15h5.8l4.1-4.1V5.1L10.9 1H5.1z"/>
+                        <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
+                    </svg>
+                    <h7 class="error-message">&nbsp;&nbsp;<%=message.message%></h7>
+                </div>
+            </div>
+        <% } %>
+
         <div class="salas">
 
             <div class="row row-cols-1 row-cols-md-<%= colunas %> g-4">
@@ -98,7 +110,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form action="/reunioes/<%= reunioesFront[i]['Reuniao.IdReuniao'] %>" method="post">
+                            <form action="/reunioes" method="post">
                                 <p>Local: <%= reunioesFront[i]['Reuniao.Sala.Nome'] %>
                                 <input type="text" value="<%= reunioesFront[i]['Reuniao.IDSala'] %>" name="sala" hidden></p>
                                 <p style="margin-bottom: 0px;">Assunto: 
@@ -116,13 +128,15 @@
     
                                     <% } %>
                                 </select>
+                                
+                                <input type="text" hidden value="<%= reunioesFront[i]['Reuniao.IdReuniao'] %>" name="IdReuniao">
                                 <div class="com-modal">
                                     <textarea class="comentario" placeholder="Observações" name="comentario"></textarea>
                                     <p style="color: gray;">Atual: <%= reunioesFront[i]['Reuniao.Observacoes'] %></p>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary btn-solicitar">Atualizar</button>
-                                    <a href="/reunioes/excluir/<%= reunioesFront[i]['Reuniao.IdReuniao'] %>" class="btn btn-danger">Deletar</a>
+                                    <button type="submit" class="btn btn-danger btn-solicitar" formaction="/reunioes/excluir" formmethod="post">Deletar</button>
                                 </div>
                             </form>
                         </div>

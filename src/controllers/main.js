@@ -54,25 +54,25 @@ module.exports = {
 
         if(novaReuniao.assunto == '' || novaReuniao.dataInicio == '' || novaReuniao.dataFim == '' || novaReuniao.select === undefined){
             verificacao1 = false;
-            const message = 'Incompleta: Faltaram dados para serem preenchidos.';
+            const message = {message:'Incompleta: Faltaram dados para serem preenchidos.', variante:'danger'};
             res.render('../views/main', {salas, pessoas, message});
         }
         else{
             if(currentdate > inicioNR){
                 verificacao1 = false;
-                const message = 'Data: Não é possível criar uma reunião antes da data atual.';
+                const message = {message:'Data: Não é possível criar uma reunião antes da data atual.', variante:'danger'};
                 res.render('../views/main', {salas, pessoas, message});
             }
             else{
                 if(fimNR < inicioNR){
                     verificacao1 = false;
-                    const message = 'Horário: O horário final da reunião deve ser após o horário inicial.';
+                    const message = {message:'Horário: O horário final da reunião deve ser após o horário inicial.', variante:'danger'};
                     res.render('../views/main', {salas, pessoas, message});
                 }
                 else{
                     if(fimNR.getTime()-inicioNR.getTime()>14400000){
                         verificacao1 = false;
-                        const message = 'Horário: A reunião excede o limite de tempo (4 horas).';
+                        const message = {message:'Horário: A reunião excede o limite de tempo (4 horas).', variante:'danger'};
                         res.render('../views/main', {salas, pessoas, message});
                     }
                 }
@@ -167,10 +167,16 @@ module.exports = {
                         IdReuniao: r.IdReuniao
                     })
                 }
+                const message = {message:'Reunião marcada com sucesso.', variante:'success'};
+                res.render('../views/main', {salas, pessoas, message});
+            }
+            else{
+                const message = {message:'Horário solicitado não está disponível para algum convidado.', variante:'danger'};
+                res.render('../views/main', {salas, pessoas, message});
             }
         }
         else{
-            const message = 'Reunião inexistente.';
+            const message = {message:'Horário solicitado não está disponível para algum convidado.', variante:'danger'};
             res.render('../views/main', {salas, pessoas, message});
         }
     }
