@@ -5,6 +5,7 @@ const reuniao = require('../model/reuniao');
 const { Op } = require("sequelize");
 const moment = require('moment');
 
+
 module.exports = {
     async reunioesGet(req, res){
         if(!req.session.usuario){
