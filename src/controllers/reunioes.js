@@ -33,7 +33,10 @@ module.exports = {
                     attributes: ['Nome'],
                 }]
             }],
-            where: {Usuario: req.session.usuario}
+            where: {Usuario: req.session.usuario},
+            order: [
+                [reuniao, 'HorarioInicio', 'ASC']
+            ]
         });
 
         const dataComIntl = new Intl.DateTimeFormat('pt-BR', {
@@ -42,6 +45,8 @@ module.exports = {
         });
 
         var reunioesFront = []
+
+        console.log(reunioes)
 
         for(let i=0; i<reunioes.length; i++){
             if(reunioes[i]['Reuniao.HorarioInicio'] >= hoje){
@@ -138,7 +143,10 @@ module.exports = {
                     attributes: ['Nome'],
                 }]
             }],
-            where: {Usuario: req.session.usuario}
+            where: {Usuario: req.session.usuario},
+            order: [
+                [reuniao, 'HorarioInicio', 'ASC']
+            ]
         });
 
         const dataComIntl = new Intl.DateTimeFormat('pt-BR', {
