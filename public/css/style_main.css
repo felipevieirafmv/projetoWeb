@@ -163,12 +163,17 @@ body{
     padding-top: calc(var(--bs-modal-padding) - var(--bs-modal-footer-gap) * .5);
 }
 
+.container-alert{
+    padding-left: 680px;
+}
+
 .error{
     padding-top: 14px;
     padding-right: 7px;
 }
 
 .alert-error{
+    z-index: 9999;
     height: 40px;
-    width: 260px;
+    width: 520px;
 }
