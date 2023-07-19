@@ -27,7 +27,7 @@ module.exports = {
                 where: {Usuario: {[Op.ne]: req.session.usuario}}
         });
 
-        res.render('../views/main', {salas, pessoas});
+        res.render('../views/main', {salas, pessoas, message: false});
     },
 
     async mainPost(req, res){
@@ -35,26 +35,45 @@ module.exports = {
         const currentdate = new Date(); 
         const inicioNR = new Date(novaReuniao.dataInicio);
         const fimNR = new Date(novaReuniao.dataFim);
+        const salas = await sala.findAll({
+            raw: true,
+            attributes: ['IDSala', 'Nome', 'Capacidade', 'Setor', 'FotoSala']
+        });
+
+        const reuniaos = await reuniao.findAll({
+            raw: true,
+            attributes: ['IDReuniao', 'Assunto', 'HorarioInicio', 'HorarioFim', 'Observacoes', 'IDSala']
+        });
+
+        const pessoas = await pessoa.findAll({
+            raw: true,
+            attributes: ['Usuario', 'Nome'],
+                where: {Usuario: {[Op.ne]: req.session.usuario}}
+        });
         var verificacao1 = true;
 
         if(novaReuniao.assunto == '' || novaReuniao.dataInicio == '' || novaReuniao.dataFim == '' || novaReuniao.select === undefined){
-            console.log('reuniao inexistente');
             verificacao1 = false;
+            const message = 'Incompleta: Faltaram dados para serem preenchidos.';
+            res.render('../views/main', {salas, pessoas, message});
         }
         else{
             if(currentdate > inicioNR){
-                console.log('reuniao no passado slk');
                 verificacao1 = false;
+                const message = 'Data: Não é possível criar uma reunião antes da data atual.';
+                res.render('../views/main', {salas, pessoas, message});
             }
             else{
                 if(fimNR < inicioNR){
-                    console.log('acaba antes de terminar kk');
                     verificacao1 = false;
+                    const message = 'Horário: O horário final da reunião deve ser após o horário inicial.';
+                    res.render('../views/main', {salas, pessoas, message});
                 }
                 else{
                     if(fimNR.getTime()-inicioNR.getTime()>14400000){
-                        console.log('compra uma sala logo pra vc');
                         verificacao1 = false;
+                        const message = 'Horário: A reunião excede o limite de tempo (4 horas).';
+                        res.render('../views/main', {salas, pessoas, message});
                     }
                 }
             }
@@ -151,7 +170,8 @@ module.exports = {
             }
         }
         else{
-            console.log('reuniao nao existe meu parceiro')
+            const message = 'Reunião inexistente.';
+            res.render('../views/main', {salas, pessoas, message});
         }
     }
 }
