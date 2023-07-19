@@ -136,7 +136,7 @@ module.exports = {
 
     async salasPost(req, res){
         const novaReuniao = req.body;
-        const setor = novaReuniao.setor[0];
+        const setor = novaReuniao.setor;
         const currentdate = new Date(); 
         const inicioNR = new Date(novaReuniao.dataInicio);
         const fimNR = new Date(novaReuniao.dataFim);
