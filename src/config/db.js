@@ -5,7 +5,7 @@ const database = new sequelize('projetoWeb', 'VieiraTavares', 'etstech31415',
 {
     dialect: 'mssql', 
     host:'localhost', 
-    port: 61654,
+    port: 54928,
     timezone: '-03:00'
 });
 
