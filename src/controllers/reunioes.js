@@ -74,37 +74,6 @@ module.exports = {
         res.render('../views/reunioes', {reunioesFront, datasI, datasF, colunas, pessoas, nomes, message: false});
     },
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     async excluirReuniao(req, res){
         if(!req.session.usuario){
             return res.redirect('/')
@@ -183,36 +152,6 @@ module.exports = {
         const message = {message:'Reunião excluída com sucesso.', variante:'success'};
         res.render('../views/reunioes', {reunioesFront, datasI, datasF, colunas, pessoas, nomes, message});
     },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     async atualizarReuniao(req, res){
 
